@@ -7,7 +7,8 @@
 #================== IMPORT ====================
 import random, os # Importa o módulo "random" no python para o sorteio aleatório das senhas, "os" para limpar no terminal (SHELL).
 #=================== WHILE DO JOGO ====================
-while True:  # While executado enquanto "True". Ele contém todo o jogo, com objetivo de dar opção para jogar novamente assim que acabar.
+playgame = True # Variável com valor igual a "True" para iniciar o while ou pará-lo.
+while playgame == True:  # While executado enquanto "playgame" ter valor "True". Ele contém todo o jogo, com objetivo de dar opção para jogar novamente assim que acabar.
     def jogo_da_senha(): # Função que armazena todo o jogo com finalidade de chamá-la para executar o jogo.
         #================== VARIÁVEIS =================
         global tentativas,insere,limpar,digito1,digito2,digito3,digito4,digito5,tem1,tem2,tem3,tem4,tem5 # Deixa várias variáveis em globais para utilizar durante def's de print que vem antes dos input's e if's.
@@ -80,8 +81,9 @@ while True:  # While executado enquanto "True". Ele contém todo o jogo, com obj
         senha4 = str(random.randint(0,9))#|
         senha5 = str(random.randint(0,9))#/
         senhatoda = [senha1,senha2,senha3,senha4,senha5]# = Todas as senhas listadas em uma só variável, para ver se o numero do usuario esta na senha e se contém os digitos da variável mais abaixo "digitotodo".
-        #================== INFORMAR ================== 
-        while True: # While com "True", vai começar os input's e if's no jogo.
+        #================== INFORMAR ==================
+        start = True # Variável com valor "True" para executar o while.
+        while start == True: # While com "start" igual a "True", vai começar os input's e if's no jogo.
             titulo1() #---\
             como_jogar() #| = Vai printar os alguns def's vistos acima no código.
             titulo2() #   |
@@ -122,7 +124,7 @@ while True:  # While executado enquanto "True". Ele contém todo o jogo, com obj
                 tem2 = '-1' #                         |
             #=== DIGITO 3:                            |
             if digito3 in senhatoda: #                |
-                tem3 = '0' #                          | = Serve para comparar se os digitos da senha do usuário estão nao senha gerada e nas respectivas posiçõies ou não, e adicionar os -1, 0 e +1 em variáveis para printar na def "printar()"
+                tem3 = '0' #                          | = Serve para comparar se os digitos da senha do usuário estão nao senha gerada e nas respectivas posiçõies, ou não, e adicionar os -1, 0 e +1 em variáveis para printar na def "printar()"
                 if digito3 == senha3: #               |
                     tem3 = '+1' #                     |
             else: #                                   |
@@ -146,12 +148,12 @@ while True:  # While executado enquanto "True". Ele contém todo o jogo, com obj
             #=== - SE GANHOU:
             if digitotodo == senhatoda: #--\
                 winner() #                 | = if para verificar se todos os digitos da senha do usuário estão, respectivamente, iguais ao da senha gerada. Se esse for o caso, ira printar que acertou a senha e parar a execução do jogo, iniciando um input para jogar novamente. 
-                break #--------------------/
+                start = False #------------/
             #=== - TENTATIVAS:
             tentativas -= 1 # Desconta 1 das tentativas a cada vez que o usuário informa uma senha e não corresponde igualmente a senha gerada.
             if tentativas == 0 and digitotodo != senhatoda: #--\
                 loser() #                                      | = if para verificar se as tentativas ficaram igual a 0 e se a senha informada pelo usuário não corresponde igualmente a senha gerada. Se esse for o caso, ira printar que não acertou a senha e parar a execução do jogo, iniciando um input para jogar novamente.
-                break #----------------------------------------/
+                start = False #--------------------------------/
     #===== EXECUTANDO O JOGO ========
     jogo_da_senha() # Chama a função que armazena todo o jogo.
     #=============================================
@@ -159,9 +161,9 @@ while True:  # While executado enquanto "True". Ele contém todo o jogo, com obj
     #=============================================
     restart = input('\n>>> Gostaria de jogar novamente? (s/n): ') # Input perguntando se quer jogar novamente. S pra sim e N pra não.
     if restart == 's' or restart == 'S': #\ = if que se input for igual a S ou s, "playgame" ficará "True", reiniciando o jogo dentro do while.
-        break # ----------------/
+        playgame = True # ----------------/
     elif restart == 'n' or restart == 'N': #\ = if que se input for igual a "N" ou "n", "playgame" ficará "True", encerrando o jogo ao para o while.
-        break #------------------/
+        playgame = False #------------------/
     while restart != 'n' and restart != 'N' and restart != 's' and restart != 'S': #\ 
         eval(limpar) #Executa um comando no terminal (Shell) para limpá-lo. ------  | = while verificando que, se o input nao for igual a "s" ou "n", irá printar entrada inválida e perguntar o input novamente, e caso novamente não ser igual a "s" ou "n", repetir até ser.
         print('>>> Entrada inválida! Digite "S" ou "N"!') #-------------------------|
